@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">CoWin Guide</string>
+    <string name="cowin_guide">Cowin Guide</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="get_started">Get Started</string>
+    <string name="create_account">Create Account</string>
+    <string name="need_help">Need Help ?</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="email_address">Email Address</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="signin">Signin !</string>
 </resources>

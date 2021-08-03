@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/virus1"
+    android:layout_height="match_parent"
+    tools:context=".View.Login.SignUp.SignUpActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/transparent"
+        android:scaleType="fitXY"
+        />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="@dimen/dp100"
+        android:layout_height="@dimen/dp100"
+        android:src="@drawable/hospital"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp40"/>
+    <TextView
+        android:id="@+id/holliday"
+        android:layout_below="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cowin_guide"
+        android:textSize="@dimen/sp40"
+        android:textColor="@color/col_fff"
+        android:gravity="center"
+       />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_below="@+id/holliday"
+        android:layout_alignParentBottom="true"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/dp30"
+            android:layout_marginRight="@dimen/dp30"
+            android:background="@drawable/roundwhite">
+
+            <ImageView
+                android:layout_weight="1"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/username"
+                android:layout_gravity="center"
+                android:paddingLeft="@dimen/dp10"/>
+            <com.example.cowinguide.custom_font.MyEditText
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp50"
+                android:background="#00000000"
+                android:paddingLeft="@dimen/dp10"
+                android:hint="@string/username"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/col_fff"
+                android:textColorHint="@color/col_fff"
+                android:drawablePadding="@dimen/dp10"
+                android:textSize="13dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/roundwhite"
+            android:layout_marginLeft="@dimen/dp30"
+            android:layout_marginRight="@dimen/dp30"
+            android:layout_marginTop="@dimen/dp10">
+
+            <ImageView
+                android:id="@+id/phone"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_local_phone_24"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:paddingLeft="@dimen/dp10"
+                />
+
+
+            <com.example.cowinguide.custom_font.MyEditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp50"
+                android:background="#00000000"
+                android:paddingLeft="@dimen/dp10"
+                android:hint="@string/contact_number"
+                android:inputType="phone"
+                android:textColorHint="@color/col_fff"
+                android:textColor="@color/col_fff"
+                android:gravity="center"
+                android:textSize="@dimen/sp13"
+                android:layout_weight="1"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/roundwhite"
+            android:layout_marginLeft="@dimen/dp30"
+            android:layout_marginRight="@dimen/dp30"
+            android:layout_marginTop="@dimen/dp10">
+
+            <ImageView
+                android:id="@+id/Iemail"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/email"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:paddingLeft="@dimen/dp10"
+                />
+
+
+            <com.example.cowinguide.custom_font.MyEditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp50"
+                android:background="#00000000"
+                android:paddingLeft="@dimen/dp10"
+                android:hint="@string/email_address"
+                android:inputType="textPassword"
+                android:textColorHint="@color/col_fff"
+                android:textColor="@color/col_fff"
+                android:gravity="center"
+                android:textSize="@dimen/sp13"
+                android:layout_weight="1"
+                />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/roundwhite"
+            android:layout_marginLeft="@dimen/dp30"
+            android:layout_marginRight="@dimen/dp30"
+            android:layout_marginTop="@dimen/dp10">
+
+            <ImageView
+                android:id="@+id/pass"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/password"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:paddingLeft="@dimen/dp10"
+                />
+
+
+            <com.example.cowinguide.custom_font.MyEditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp50"
+                android:background="#00000000"
+                android:paddingLeft="@dimen/dp10"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:textColorHint="@color/col_fff"
+                android:textColor="@color/col_fff"
+                android:gravity="center"
+                android:textSize="@dimen/sp13"
+                android:layout_weight="1"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/roundwhite"
+            android:layout_marginLeft="@dimen/dp30"
+            android:layout_marginRight="@dimen/dp30"
+            android:layout_marginTop="@dimen/dp10">
+
+            <ImageView
+                android:id="@+id/cpass"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/password"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:paddingLeft="@dimen/dp10"
+                />
+
+
+            <com.example.cowinguide.custom_font.MyEditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp50"
+                android:background="#00000000"
+                android:paddingLeft="@dimen/dp10"
+                android:hint="@string/confirm_password"
+                android:inputType="textPassword"
+                android:textColorHint="@color/col_fff"
+                android:textColor="@color/col_fff"
+                android:gravity="center"
+                android:textSize="@dimen/sp13"
+                android:layout_weight="1"
+                />
+        </LinearLayout>
+
+
+
+        <com.example.cowinguide.custom_font.MyTextView
+            android:id="@+id/getstarted"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp50"
+            android:background="@drawable/round"
+            android:text="SignUp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/col_fff"
+            android:layout_above="@+id/bottom"
+            android:layout_marginLeft="@dimen/dp30"
+            android:layout_marginRight="@dimen/dp30"
+            android:layout_marginBottom="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp10"/>
+
+
+        <com.shobhitpuri.custombuttons.GoogleSignInButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp30"
+            android:layout_marginRight="@dimen/dp30"
+            android:background="@drawable/roundwhite"
+            android:text="@string/google_sign_in"
+            app:isDarkTheme="true" />
+
+        <LinearLayout
+            android:id="@+id/bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/dp16">
+
+            <com.example.cowinguide.custom_font.MyTextView
+                android:id="@+id/login"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/signin"
+                android:textColor="#FFF"/>
+            <com.example.cowinguide.custom_font.MyTextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/need_help"
+                android:textColor="#FFF"
+                android:gravity="end"/>
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+</RelativeLayout>
