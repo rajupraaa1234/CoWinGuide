@@ -31,7 +31,7 @@
         android:textSize="@dimen/sp40"
         android:textColor="@color/col_fff"
         android:gravity="center"
-        android:layout_marginTop="@dimen/dp70"/>
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,7 +49,7 @@
 
             <ImageView
                 android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp60"
                 android:layout_height="wrap_content"
                 android:src="@drawable/username"
                 android:layout_gravity="center"
@@ -81,7 +81,7 @@
 
             <ImageView
                 android:id="@+id/pass"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp60"
                 android:layout_height="wrap_content"
                 android:src="@drawable/password"
                 android:layout_weight="1"

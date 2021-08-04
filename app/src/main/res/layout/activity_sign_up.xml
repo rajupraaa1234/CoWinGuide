@@ -5,13 +5,15 @@
     android:layout_width="match_parent"
     android:background="@drawable/virus1"
     android:layout_height="match_parent"
+
     tools:context=".View.Login.SignUp.SignUpActivity">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/transparent"
         android:scaleType="fitXY"
+        android:src="@drawable/transparent"
+
         />
 
     <ImageView
@@ -37,6 +39,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginTop="@dimen/dp10"
+        android:gravity="center"
         android:layout_below="@+id/holliday"
         android:layout_alignParentBottom="true"
         >
@@ -45,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dp10"
             android:layout_marginLeft="@dimen/dp30"
             android:layout_marginRight="@dimen/dp30"
             android:background="@drawable/roundwhite">
