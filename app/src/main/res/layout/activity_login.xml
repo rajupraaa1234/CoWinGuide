@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/virus1"
+    android:id="@+id/LoginRelMain"
     tools:context=".View.Login.LoginActivity">
 
 
@@ -57,10 +58,13 @@
             <com.example.cowinguide.custom_font.MyEditText
                 android:layout_weight="1"
                 android:layout_width="match_parent"
+                android:id="@+id/emailId"
                 android:layout_height="@dimen/dp50"
                 android:background="#00000000"
+                android:text=""
+                android:inputType="textEmailAddress"
                 android:paddingLeft="@dimen/dp10"
-                android:hint="@string/username"
+                android:hint="Email Id"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textColor="@color/col_fff"
@@ -94,6 +98,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp50"
                 android:background="#00000000"
+                android:text=""
+                android:id="@+id/LoginPass"
                 android:paddingLeft="@dimen/dp10"
                 android:hint="@string/password"
                 android:inputType="textPassword"
@@ -118,7 +124,12 @@
             android:layout_marginRight="@dimen/dp30"
             android:layout_marginBottom="@dimen/dp20"
             android:layout_marginTop="@dimen/dp10"/>
-
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:id="@+id/progress"
+            android:visibility="invisible"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"/>
         <LinearLayout
             android:id="@+id/bottom"
             android:layout_width="match_parent"
@@ -145,5 +156,7 @@
 
 
     </LinearLayout>
+
+
 
 </RelativeLayout>

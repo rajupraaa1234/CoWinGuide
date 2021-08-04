@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/mainRel"
     android:background="@drawable/virus1"
     android:layout_height="match_parent"
 
@@ -62,10 +63,12 @@
                 android:paddingLeft="@dimen/dp10"/>
             <com.example.cowinguide.custom_font.MyEditText
                 android:layout_weight="1"
+                android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp50"
                 android:background="#00000000"
                 android:paddingLeft="@dimen/dp10"
+                android:text=""
                 android:hint="@string/username"
                 android:layout_gravity="center"
                 android:gravity="center"
@@ -80,6 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:id="@+id/phoneNumber"
             android:background="@drawable/roundwhite"
             android:layout_marginLeft="@dimen/dp30"
             android:layout_marginRight="@dimen/dp30"
@@ -99,9 +103,11 @@
             <com.example.cowinguide.custom_font.MyEditText
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp50"
+                android:id="@+id/Etphone"
                 android:background="#00000000"
                 android:paddingLeft="@dimen/dp10"
                 android:hint="@string/contact_number"
+                android:text=""
                 android:inputType="phone"
                 android:textColorHint="@color/col_fff"
                 android:textColor="@color/col_fff"
@@ -135,9 +141,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp50"
                 android:background="#00000000"
+                android:text=""
+                android:id="@+id/Etemail"
                 android:paddingLeft="@dimen/dp10"
                 android:hint="@string/email_address"
-                android:inputType="textPassword"
+                android:inputType="textEmailAddress"
                 android:textColorHint="@color/col_fff"
                 android:textColor="@color/col_fff"
                 android:gravity="center"
@@ -173,6 +181,8 @@
                 android:layout_height="@dimen/dp50"
                 android:background="#00000000"
                 android:paddingLeft="@dimen/dp10"
+                android:text=""
+                android:id="@+id/etpassword"
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:textColorHint="@color/col_fff"
@@ -205,7 +215,9 @@
             <com.example.cowinguide.custom_font.MyEditText
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp50"
+                android:id="@+id/cpassword"
                 android:background="#00000000"
+                android:text=""
                 android:paddingLeft="@dimen/dp10"
                 android:hint="@string/confirm_password"
                 android:inputType="textPassword"
@@ -220,7 +232,7 @@
 
 
         <com.example.cowinguide.custom_font.MyTextView
-            android:id="@+id/getstarted"
+            android:id="@+id/signUpbtn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp50"
             android:background="@drawable/round"
@@ -269,7 +281,11 @@
         </LinearLayout>
 
 
-
+      <ProgressBar
+          android:id="@+id/progressBar"
+          android:layout_width="wrap_content"
+          android:visibility="gone"
+          android:layout_height="wrap_content"/>
 
 
     </LinearLayout>

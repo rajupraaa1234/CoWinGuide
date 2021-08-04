@@ -10,4 +10,18 @@
     <string name="email_address">Email Address</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="signin">Signin !</string>
+    <string name="please_enter_username">Please Enter username</string>
+    <string name="nusername_length">UserName\'s length Should be greater than or equal to 3</string>
+    <string name="please_enter_phone_numer">Please enter phone number</string>
+    <string name="please_enter_valid_phone_number">Please enter valid phone number</string>
+    <string name="please_enter_valid_email">Please enter valid email</string>
+    <string name="please_enter_password">Please enter password</string>
+    <string name="pass_length">Password\'s length must be greater than 3</string>
+    <string name="please_enter_c_pass">Please enter confirm password</string>
+    <string name="pass_mismatch">Password MisMatch</string>
+    <string name="user_created">User Created Successfully...</string>
+    <string name="user_register_failed">User Registration Failed</string>
+    <string name="please_enter_email_id">Please enter email id</string>
+    <string name="login_success">User Login Successfully...</string>
+    <string name="logout_successfully">Logout Successfully</string>
 </resources>
