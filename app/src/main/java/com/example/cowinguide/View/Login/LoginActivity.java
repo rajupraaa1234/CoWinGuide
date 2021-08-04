@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.cowinguide.Home.HomeActivity;
+import com.example.cowinguide.NetWork.NetworkHandler;
 import com.example.cowinguide.R;
 import com.example.cowinguide.Utility.Utility;
 import com.example.cowinguide.View.Login.SignUp.SignUpActivity;
@@ -89,9 +90,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             showSnackBar(LoginRelMain,getString(R.string.please_enter_password));
             return;
         }else{
-            progressBar.setVisibility(View.VISIBLE);
-            setDisableScreen();
-            GoToLoginFromFireBase(email,pass);
+            if(NetworkHandler.isConnected(this)){
+                progressBar.setVisibility(View.VISIBLE);
+                setDisableScreen();
+                GoToLoginFromFireBase(email,pass);
+            }else{
+                showSnackBar(LoginRelMain,getString(R.string.internet_not_connected));
+            }
+
         }
     }
 

@@ -24,4 +24,5 @@
     <string name="please_enter_email_id">Please enter email id</string>
     <string name="login_success">User Login Successfully...</string>
     <string name="logout_successfully">Logout Successfully</string>
+    <string name="internet_not_connected">Internet Not Connected</string>
 </resources>

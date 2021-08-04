@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.cowinguide.NetWork.NetworkHandler;
 import com.example.cowinguide.R;
 import com.example.cowinguide.Utility.Utility;
 import com.example.cowinguide.View.Login.LoginActivity;
@@ -109,8 +110,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             showSnackBar(mainView,getString(R.string.pass_mismatch));
             return;
         }else{
-            goToSignUp();
-            progress.setVisibility(View.VISIBLE);
+            if(NetworkHandler.isConnected(this)){
+                setDisableScreen();
+                progress.setVisibility(View.VISIBLE);
+                goToSignUp();
+            }else{
+                showSnackBar(mainView,getString(R.string.internet_not_connected));
+            }
         }
     }
 
@@ -121,6 +127,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                  if(task.isSuccessful()){
                      showSnackBar(mainView,getString(R.string.user_created));
                      progress.setVisibility(View.GONE);
+                     setEnableScreen();
                      Intent intent = new Intent(SignUpActivity.this,LoginActivity.class);
                      Thread thread = new Thread(){
                          @Override
@@ -139,6 +146,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                      String str = task.getException().getLocalizedMessage();
                        showSnackBar(mainView,""+str);
                      progress.setVisibility(View.GONE);
+                     setEnableScreen();
                  }
              }
          });
@@ -148,5 +156,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
+    }
+
+    private void setDisableScreen(){
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+
+    private void setEnableScreen(){
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 }
