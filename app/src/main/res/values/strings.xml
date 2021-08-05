@@ -39,4 +39,11 @@
     <string name="post">Post</string>
     <string name="please_enter_your_service_type">please enter your Service type</string>
     <string name="number_of_services_available">number of services available</string>
+    <string name="call_log_list">Call Log List</string>
+    <string name="call_type">Call type</string>
+    <string name="date">Date</string>
+    <string name="get_current_location">Get Current Location</string>
+    <string name="please_enter_all_details">Please enter all details</string>
+    <string name="post_successfully">Post Successfully...</string>
+    <string name="poat_faild">Post Failed!!</string>
 </resources>

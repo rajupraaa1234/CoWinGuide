@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.cowinguide.Home.HomeActivity;
 import com.example.cowinguide.NetWork.NetworkHandler;
 import com.example.cowinguide.R;
+import com.example.cowinguide.Utility.SessionManager.Session.Sessionmanager;
 import com.example.cowinguide.Utility.Utility;
 import com.example.cowinguide.View.Login.SignUp.SignUpActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -103,6 +104,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            String name = user.getDisplayName();
+                            Sessionmanager.get().SetSocialLogin(true);
+                            Sessionmanager.get().setSessionName(name);
+                            Log.i("MySocialLogin"," "  + name);
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(intent);
                             finish();
@@ -185,6 +190,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
               @Override
               public void onComplete(Task<AuthResult> task) {
                   if(task.isSuccessful()){
+                      //Log.i("MYMAnualLogin",""+ mAuth.getCurrentUser().getDisplayName());
+                     // Sessionmanager.get().setSecondName(""+mAuth.getCurrentUser().getDisplayName());
                       showSnackBar(LoginRelMain,getString(R.string.login_success));
                       progressBar.setVisibility(View.GONE);
                       Intent intent = new Intent(LoginActivity.this, HomeActivity.class);

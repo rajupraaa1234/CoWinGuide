@@ -17,9 +17,13 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.cowinguide.Adapter.CallLogPojo;
 import com.example.cowinguide.CallBack.CommonDialogListner;
+import com.example.cowinguide.CallBack.OnItemClickListner;
 import com.example.cowinguide.Dialog.CustomDialog;
+import com.example.cowinguide.Post.PostActivity;
 import com.example.cowinguide.Utility.AppConstant;
+import com.example.cowinguide.Utility.SessionManager.Session.Sessionmanager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.example.cowinguide.Home.Fragment.ConsumerFragment;
@@ -31,11 +35,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.function.Consumer;
 
 import static com.example.cowinguide.Utility.Utility.showSnackBar;
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener,BottomNavigationView.OnNavigationItemSelectedListener, CommonDialogListner {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener,BottomNavigationView.OnNavigationItemSelectedListener, CommonDialogListner, OnItemClickListner {
 
     Button logout;
     RelativeLayout homeRel;
@@ -139,10 +147,19 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
+
+
     @Override
     protected void onResume() {
         super.onResume();
         customDialog=new CustomDialog(this);
+        EventBus.getDefault().register(this);
     }
 
     private void logoutUser() {
@@ -153,6 +170,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void run() {
                 try {
+                    Sessionmanager.get().clear();
                     Thread.sleep(1000);
                     startActivity(intent);
                     finish();
@@ -186,5 +204,26 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void OnCloseClickListner(int code) {
 
+    }
+
+
+    @Override
+    public void onClickItem(CallLogPojo obj) {
+        Bundle bundle = new Bundle();
+        Intent intent = new Intent(this, PostActivity.class);
+        bundle.putSerializable(AppConstant.DATA, obj);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void doThis(CallLogPojo obj) {
+       // Log.i("MyBack","Back");
+        if(currentFragment == null || (!(currentFragment instanceof ConsumerFragment))){
+            currentFragment = new ConsumerFragment();
+            navigation.setSelectedItemId(R.id.consumer_nav);
+            addFragment(currentFragment,false);
+        }
     }
 }

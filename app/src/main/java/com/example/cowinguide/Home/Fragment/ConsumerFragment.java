@@ -63,4 +63,6 @@ public class ConsumerFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_consumer, container, false);
     }
+
+
 }
