@@ -25,5 +25,8 @@ public class AppConstant {
     public static String LOGOUT_ALERT="Are you sure you want to logout?";
     public static final int USER_LOGOUT=3;
 
+    /** Collections Name */
+    public static final String Collections = "CallLogs";
+
 
 }

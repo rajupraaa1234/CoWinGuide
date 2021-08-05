@@ -2,13 +2,35 @@ package com.example.cowinguide.Home.Fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.cowinguide.Adapter.ConsumerApdater;
+import com.example.cowinguide.Adapter.CustomerServicePojo;
 import com.example.cowinguide.R;
+import com.example.cowinguide.Utility.AppConstant;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.example.cowinguide.Utility.Utility.showSnackBar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,6 +70,13 @@ public class ConsumerFragment extends Fragment {
         return fragment;
     }
 
+    RecyclerView recyclerView;
+    String TAG = "ConsumerFragment";
+    ProgressBar progressBar;
+    ArrayList<CustomerServicePojo> arr = new ArrayList<>();
+    ConsumerApdater adapter;
+    FrameLayout Cframlayout;
+    TextView nodata;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,5 +93,57 @@ public class ConsumerFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_consumer, container, false);
     }
 
+    @Override
+    public void onViewCreated(View view,Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        init(view);
+    }
 
+    private void init(View view){
+        recyclerView = view.findViewById(R.id.recyclerView);
+        progressBar = view.findViewById(R.id.CProgress);
+        nodata = view.findViewById(R.id.cNoData);
+        Cframlayout = view.findViewById(R.id.Cframlayout);
+        getDataFromFireBase();
+    }
+
+
+    private void getDataFromFireBase(){
+        progressBar.setVisibility(View.VISIBLE);
+        arr = new ArrayList<CustomerServicePojo>();
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+        firebaseFirestore.collection(AppConstant.Collections).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot documentSnapshots) {
+                        if (documentSnapshots.isEmpty()) {
+                            Log.d(TAG, "onSuccess: LIST EMPTY");
+                            progressBar.setVisibility(View.GONE);
+                            nodata.setVisibility(View.VISIBLE);
+                            recyclerView.setVisibility(View.GONE);
+                            return;
+                        } else {
+                            nodata.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
+                            List<CustomerServicePojo> types = documentSnapshots.toObjects(CustomerServicePojo.class);
+                            arr.addAll(types);
+                            adapter = new ConsumerApdater(requireActivity(),arr);
+                            recyclerView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    }})
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(Exception e) {
+                            progressBar.setVisibility(View.GONE);
+                            showSnackBar(Cframlayout,getString(R.string.error));
+                        }
+                    });
+
+    }
+
+    
 }

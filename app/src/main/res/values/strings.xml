@@ -46,4 +46,5 @@
     <string name="please_enter_all_details">Please enter all details</string>
     <string name="post_successfully">Post Successfully...</string>
     <string name="poat_faild">Post Failed!!</string>
+    <string name="error">Error getting data!!!</string>
 </resources>

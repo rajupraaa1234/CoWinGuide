@@ -3,12 +3,118 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/Cframlayout"
     tools:context=".Home.Fragment.ConsumerFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent" >
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Consumer" />
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp15"
+                android:layout_marginTop="@dimen/dp20"
+                android:layout_marginEnd="@dimen/dp15"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@drawable/search_babaji_background"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp7">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp5"
+                        android:src="@drawable/ic_baseline_search_24" />
+
+                    <EditText
+                        android:id="@+id/name_search_et"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/color_transparent"
+                        android:hint="Search"
+                        android:textColorHint="@color/white"
+                        android:textColor="@color/white"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:textSize="@dimen/sp16" />
+
+                    <ImageView
+                        android:id="@+id/cross_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp5"
+                        android:src="@drawable/ic_cross_fill" />
+
+                </LinearLayout>
+
+
+                <ImageView
+                    android:id="@+id/sorting_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp24"
+                    android:layout_marginEnd="@dimen/dp24"
+                    android:src="@drawable/ic_filter1" />
+
+
+            </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp25"
+            android:background="@drawable/white_top_curved_25dp"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/dp15"
+            android:paddingEnd="@dimen/dp15">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+       <ProgressBar
+           android:id="@+id/CProgress"
+           android:layout_width="wrap_content"
+           android:layout_centerInParent="true"
+           android:visibility="gone"
+           android:layout_height="wrap_content"/>
+
+       <TextView
+           android:id="@+id/cNoData"
+           android:layout_width="wrap_content"
+           android:text="No Services Available"
+           android:layout_centerInParent="true"
+           android:visibility="gone"
+           android:textColor="@color/black"
+           android:fontFamily="@font/sfrrodisplay_regular"
+           android:textSize="@dimen/sp25"
+           android:layout_height="wrap_content"/>
+   </RelativeLayout>
+
 
 </FrameLayout>

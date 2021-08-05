@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +19,9 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.cowinguide.Adapter.CallLogPojo;
+import com.example.cowinguide.Adapter.CustomerServicePojo;
 import com.example.cowinguide.CallBack.CommonDialogListner;
+import com.example.cowinguide.CallBack.OnConsumerItemClicked;
 import com.example.cowinguide.CallBack.OnItemClickListner;
 import com.example.cowinguide.Dialog.CustomDialog;
 import com.example.cowinguide.Post.PostActivity;
@@ -43,7 +46,7 @@ import java.util.function.Consumer;
 
 import static com.example.cowinguide.Utility.Utility.showSnackBar;
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener,BottomNavigationView.OnNavigationItemSelectedListener, CommonDialogListner, OnItemClickListner {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener,BottomNavigationView.OnNavigationItemSelectedListener, CommonDialogListner, OnItemClickListner, OnConsumerItemClicked {
 
     Button logout;
     RelativeLayout homeRel;
@@ -225,5 +228,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             navigation.setSelectedItemId(R.id.consumer_nav);
             addFragment(currentFragment,false);
         }
+    }
+
+    @Override
+    public void onConsumerClickItem(CustomerServicePojo obj) {
+        String mob = obj.getNumber();
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + mob));
+        startActivity(intent);
+        //Toast.makeText(this, "Haii Consumer " + mob, Toast.LENGTH_SHORT).show();
     }
 }

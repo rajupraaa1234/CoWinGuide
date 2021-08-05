@@ -246,7 +246,7 @@ public class PostActivity extends AppCompatActivity {
         map.put("date",eDate);
         map.put("ServiceType",ServiceType);
 
-        firebaseFirestore.collection("CallLogs")
+        firebaseFirestore.collection(AppConstant.Collections)
                 .add(map)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
