@@ -8,4 +8,18 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="col_fff">#fff</color>
+    <color name="col_4e4e4e">#4e4e4e</color>
+    <color name="col_eeeeee">#eeeeee</color>
+    <color name="color_7166f9">#7166f9</color>
+    <color name="hintColor">#aaaaaa</color>
+    <color name="col_6af5dd">#6af5dd</color>
+
+
+    <color name="editTextColor">#2BEAE8FF</color>
+    <color name="editTextStroke">#2B7166F9</color>
+    <color name="color_eae8ff">#eae8ff</color>
+    <color name="color_transparent">#00ffffff</color>
+    <color name="colorPrimary">#7166f9</color>
+    <color name="colorPrimaryDark">#7166f9</color>
+    <color name="colorAccent">#7166f9</color>
 </resources>

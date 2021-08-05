@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/consumer_nav"
+        android:icon="@drawable/people"
+        android:title="@string/consumer"
+        android:visible="true"
+        android:iconTint="@color/black"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/provider_nav"
+        android:icon="@drawable/businessman"
+        android:title="@string/provider"
+        android:visible="true"
+        app:showAsAction="ifRoom" />
+
+</menu>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "983065080763",
+    "project_id": "cowin-guide-67b08",
+    "storage_bucket": "cowin-guide-67b08.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:983065080763:android:ef10b482eec29742b34a9e",
+        "android_client_info": {
+          "package_name": "com.example.cowinguide"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "983065080763-lnl0un7phnnsndsdu8qqtrjigrk72bvh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAedXV3Ttq_vMdK1bTnHX9OoY2XiqQ-XZE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "983065080763-lnl0un7phnnsndsdu8qqtrjigrk72bvh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

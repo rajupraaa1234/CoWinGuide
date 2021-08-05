@@ -22,4 +22,17 @@ public class AppConstant {
     /** Facebook login constant*/
     public static final String CountryCode="CountryCode";
 
+
+    public static final int CAR_LIST_DIALOG_DALETE=1;
+    public static String LOGOUT_ALERT="Are you sure you want to logout?";
+    public static final int USER_LOGOUT=3;
+    public static final int ASK_FOR_ADD_CAR=4;
+    public static final int CLOSE_BTN=5;
+    public static final int SUCCESSFULL=2;
+    public static final String SUCCESSFUL_MSG="Successful";
+    public static final String CAR_DELETE_ALERT="Are You sure to delete this car?";
+    public static final String SAVED_IN_ACCOUNT="Saved in account";
+    public static final String Your_new_phone_number_has_been_successfully_updated = "Your new phone number has been successfully updated";
+
+
 }

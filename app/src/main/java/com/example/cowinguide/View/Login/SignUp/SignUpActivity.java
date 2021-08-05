@@ -40,7 +40,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        hideStatusBar();
+        //hideStatusBar();
         setContentView(R.layout.activity_sign_up);
         init();
     }

@@ -24,5 +24,19 @@
     <string name="please_enter_email_id">Please enter email id</string>
     <string name="login_success">User Login Successfully...</string>
     <string name="logout_successfully">Logout Successfully</string>
+    <string name="phone_filter" translatable="false">1234567890</string>
+    <string name="name_filter" translatable="false">qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM.</string>
     <string name="internet_not_connected">Internet Not Connected</string>
+    <string name="consumer">Consumer</string>
+    <string name="provider">Provider</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="are_you_sure_want_to_logout">Are you sure want to logout?</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="location">please enter your location</string>
+    <string name="email">email</string>
+    <string name="post">Post</string>
+    <string name="please_enter_your_service_type">please enter your Service type</string>
+    <string name="number_of_services_available">number of services available</string>
 </resources>

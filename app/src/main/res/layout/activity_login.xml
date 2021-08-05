@@ -122,8 +122,18 @@
             android:layout_above="@+id/bottom"
             android:layout_marginLeft="@dimen/dp30"
             android:layout_marginRight="@dimen/dp30"
-            android:layout_marginBottom="@dimen/dp20"
+            android:layout_marginBottom="@dimen/dp10"
             android:layout_marginTop="@dimen/dp10"/>
+
+        <com.shobhitpuri.custombuttons.GoogleSignInButton
+            android:layout_width="match_parent"
+            android:id="@+id/googleBtn"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:background="@drawable/roundwhite"
+            android:text="@string/google_sign_in"
+            app:isDarkTheme="true" />
         <ProgressBar
             android:layout_width="wrap_content"
             android:id="@+id/progress"
