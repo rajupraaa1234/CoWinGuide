@@ -1,12 +1,10 @@
 package com.example.cowinguide
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_pushto_db.*
-import kotlinx.android.synthetic.main.activity_pushto_db.tvNumber
-import kotlinx.android.synthetic.main.mylayout.*
 
 class PushtoDB : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,7 +13,7 @@ class PushtoDB : AppCompatActivity() {
 
         submit.setOnClickListener(){
             val name = dbName.text.toString()
-            val  number = tvNumber.text.toString()
+            val  number = dbNumber.text.toString()
             val type = dbType.text.toString()
             val date = dbDate.text.toString()
             val location = dbLocation.text.toString()

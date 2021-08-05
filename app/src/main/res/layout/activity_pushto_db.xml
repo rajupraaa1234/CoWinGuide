@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PushtoDB">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <EditText
-        android:id="@+id/tvNumber"
+        android:id="@+id/dbNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
@@ -28,8 +25,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="Name"
-        app:layout_constraintStart_toStartOf="@+id/tvNumber"
-        app:layout_constraintTop_toBottomOf="@+id/tvNumber" />
+        app:layout_constraintStart_toStartOf="@+id/dbNumber"
+        app:layout_constraintTop_toBottomOf="@+id/dbNumber" />
 
     <EditText
         android:id="@+id/dbDate"

@@ -5,6 +5,8 @@
       <map>
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1503623188405797" />
         <entry key="app/src/main/res/layout/activity_provider_service.xml" value="0.1503623188405797" />
+        <entry key="app/src/main/res/layout/activity_pushto_db.xml" value="0.1503623188405797" />
+        <entry key="app/src/main/res/layout/mylayout.xml" value="0.1503623188405797" />
       </map>
     </option>
   </component>

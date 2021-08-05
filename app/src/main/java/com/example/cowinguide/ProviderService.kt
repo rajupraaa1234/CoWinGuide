@@ -15,16 +15,17 @@ import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class ProviderService : AppCompatActivity(), AdapterView.OnItemClickListener {
+class ProviderService : AppCompatActivity() , AdapterView.OnItemClickListener {
 
     lateinit var recyclerView : RecyclerView
     var TAG = ProviderService::class.simpleName
     public lateinit var myAdapter : CallLogView
-     var userArrayList: ArrayList<LogDetails> = arrayListOf()
+    var userArrayList: ArrayList<LogDetails> = arrayListOf()
 
 
-    var cols = listOf<String>(CallLog.Calls._ID, CallLog.Calls.NUMBER, CallLog.Calls.TYPE,
-                                CallLog.Calls.DURATION, CallLog.Calls.DATE, CallLog.Calls.GEOCODED_LOCATION).toTypedArray()
+    var cols = listOf<String>(
+        CallLog.Calls._ID, CallLog.Calls.NUMBER, CallLog.Calls.TYPE,
+        CallLog.Calls.DURATION, CallLog.Calls.DATE, CallLog.Calls.GEOCODED_LOCATION).toTypedArray()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -49,7 +50,7 @@ class ProviderService : AppCompatActivity(), AdapterView.OnItemClickListener {
         setContentView(R.layout.activity_provider_service)
 
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, Array(1){Manifest.permission.READ_CALL_LOG},101)
+            ActivityCompat.requestPermissions(this, Array(1){ Manifest.permission.READ_CALL_LOG},101)
         }
         else
             displayLog()
@@ -69,16 +70,18 @@ class ProviderService : AppCompatActivity(), AdapterView.OnItemClickListener {
     }
 
     private fun displayLog() {
-        
-        var from = listOf<String>(CallLog.Calls.NUMBER,
-                                    CallLog.Calls.DURATION,
-                                    CallLog.Calls.TYPE,
-                                    CallLog.Calls.DATE,
-                                    CallLog.Calls.GEOCODED_LOCATION)
 
-        var recieve = intArrayOf(R.id.tvNumber, R.id.duration, R.id.tvType, R.id.tvDate, R.id.tvLocation)
+        var from = listOf<String>(
+            CallLog.Calls.NUMBER,
+            CallLog.Calls.DURATION,
+            CallLog.Calls.TYPE,
+            CallLog.Calls.DATE,
+            CallLog.Calls.GEOCODED_LOCATION)
 
-        var rs = contentResolver.query(CallLog.Calls.CONTENT_URI, cols, null,
+        var recieve = intArrayOf(R.id.dbNumber, R.id.duration, R.id.tvType, R.id.tvDate, R.id.tvLocation)
+
+        var rs = contentResolver.query(
+            CallLog.Calls.CONTENT_URI, cols, null,
             null, "${CallLog.Calls.LAST_MODIFIED} DESC")
 
         var number : Int? = rs?.getColumnIndex(CallLog.Calls.NUMBER)
@@ -119,7 +122,7 @@ class ProviderService : AppCompatActivity(), AdapterView.OnItemClickListener {
 
     override fun onItemClick(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
-       var dataCursor = adapterView?.getItemAtPosition(position) as Cursor
+        var dataCursor = adapterView?.getItemAtPosition(position) as Cursor
         var colIndex = dataCursor.getColumnIndex(CallLog.Calls.NUMBER)
         var phoneno =dataCursor.getString(colIndex)
         Log.i("providerservice-phno= ",phoneno)
