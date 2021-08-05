@@ -1,18 +1,22 @@
-package com.example.cowinguide
+package com.example.cowinguide.provider
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.cowinguide.R
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_pushto_db.*
 
 class PushtoDB : AppCompatActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pushto_db)
 
         submit.setOnClickListener(){
-            val name = dbName.text.toString()
+            val name = dbName.toString()
             val  number = dbNumber.text.toString()
             val type = dbType.text.toString()
             val date = dbDate.text.toString()

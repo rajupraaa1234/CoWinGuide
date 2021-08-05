@@ -1,4 +1,4 @@
-package com.example.cowinguide
+package com.example.cowinguide.provider
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,15 +7,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cowinguide.R
 
-class CallLogView (private val userList : ArrayList<LogDetails>,val clickListener: (LogDetails, Int) -> Unit): RecyclerView.Adapter<CallLogView.MyViewHolder>(){
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CallLogView.MyViewHolder {
+class CallLogView (private val userList : ArrayList<LogDetails>, val clickListener: (LogDetails, Int) -> Unit): RecyclerView.Adapter<CallLogView.MyViewHolder>(){
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.mylayout,parent,false)
 
         return MyViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: CallLogView.MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val user: LogDetails =  userList[position]
         holder.dbNumber.text = user.phone
         holder.type.text = user.type

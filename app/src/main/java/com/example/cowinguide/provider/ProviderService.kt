@@ -1,4 +1,4 @@
-package com.example.cowinguide
+package com.example.cowinguide.provider
 
 import android.Manifest
 import android.content.Intent
@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cowinguide.R
 
 class ProviderService : AppCompatActivity() , AdapterView.OnItemClickListener {
 
@@ -31,6 +32,7 @@ class ProviderService : AppCompatActivity() , AdapterView.OnItemClickListener {
 
         myAdapter = CallLogView(userArrayList){ itemDto: LogDetails, position: Int ->
             val intent = Intent(this, PushtoDB::class.java)
+            intent.putExtra("Username", "Blah")
             startActivity(intent)
             Log.e("MyActivity", "Clicked on item  ${itemDto.phone} at position $position")
             /*Snackbar.make(View, "Clicked on item  ${itemDto.phone} at position $position",
@@ -78,7 +80,13 @@ class ProviderService : AppCompatActivity() , AdapterView.OnItemClickListener {
             CallLog.Calls.DATE,
             CallLog.Calls.GEOCODED_LOCATION)
 
-        var recieve = intArrayOf(R.id.dbNumber, R.id.duration, R.id.tvType, R.id.tvDate, R.id.tvLocation)
+        var recieve = intArrayOf(
+            R.id.dbNumber,
+            R.id.duration,
+            R.id.tvType,
+            R.id.tvDate,
+            R.id.tvLocation
+        )
 
         var rs = contentResolver.query(
             CallLog.Calls.CONTENT_URI, cols, null,

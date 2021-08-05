@@ -16,22 +16,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CoWinGuide">
-
-        <activity android:name=".Home.HomeActivity" />
-        <activity android:name=".View.Login.SignUp.SignUpActivity" />
-        <activity android:name=".View.Login.LoginActivity" />
         <activity
-            android:name=".PushtoDB"
-            android:exported="true" />
-
-        <activity
-            android:name=".ProviderService"
-            android:exported="true">
+            android:name=".consumer.ConsumerService"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".Home.HomeActivity" />
+        <activity android:name=".View.Login.SignUp.SignUpActivity" />
+        <activity android:name=".View.Login.LoginActivity" />
+        <activity
+            android:name=".provider.PushtoDB"
+            android:exported="true" />
+        <activity
+            android:name=".provider.ProviderService"
+            android:exported="true">
+
         </activity>
     </application>
 
