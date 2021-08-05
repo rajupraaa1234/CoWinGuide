@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".App.appController"
@@ -19,11 +20,7 @@
         <activity
             android:name=".consumer.ConsumerService"
             android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".Home.HomeActivity" />
         <activity android:name=".View.Login.SignUp.SignUpActivity" />
@@ -31,10 +28,16 @@
         <activity
             android:name=".provider.PushtoDB"
             android:exported="true" />
+
+
         <activity
             android:name=".provider.ProviderService"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

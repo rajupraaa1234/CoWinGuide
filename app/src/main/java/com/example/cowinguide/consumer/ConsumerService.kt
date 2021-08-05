@@ -1,12 +1,17 @@
 package com.example.cowinguide.consumer
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cowinguide.R
+import com.example.cowinguide.provider.LogDetails
+import com.example.cowinguide.provider.PushtoDB
 import com.google.firebase.firestore.*
+import kotlinx.android.synthetic.main.mylayout2.*
 
 class ConsumerService : AppCompatActivity() {
 
@@ -30,6 +35,8 @@ class ConsumerService : AppCompatActivity() {
         recyclerView.adapter = myAdapter
 
         EventChangeListener()
+
+
     }
 
     private fun EventChangeListener() {

@@ -27,8 +27,10 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
+
+
             <TextView
-                android:id="@+id/duration"
+                android:id="@+id/tvType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -37,11 +39,10 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvType"
+                android:id="@+id/duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView"
                 android:textSize="16dp"
                 android:textStyle="bold" />
 

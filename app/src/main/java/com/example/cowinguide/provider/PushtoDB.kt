@@ -16,7 +16,7 @@ class PushtoDB : AppCompatActivity() {
         setContentView(R.layout.activity_pushto_db)
 
         submit.setOnClickListener(){
-            val name = dbName.toString()
+            val name = dbName.text.toString()
             val  number = dbNumber.text.toString()
             val type = dbType.text.toString()
             val date = dbDate.text.toString()

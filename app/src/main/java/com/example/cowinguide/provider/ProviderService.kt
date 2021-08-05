@@ -15,6 +15,9 @@ import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cowinguide.R
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ProviderService : AppCompatActivity() , AdapterView.OnItemClickListener {
 
@@ -95,6 +98,7 @@ class ProviderService : AppCompatActivity() , AdapterView.OnItemClickListener {
         var number : Int? = rs?.getColumnIndex(CallLog.Calls.NUMBER)
         var type : Int? = rs?.getColumnIndex(CallLog.Calls.TYPE)
         var timestamp : Int? = rs?.getColumnIndex(CallLog.Calls.DATE)
+        var location: Int? = rs?.getColumnIndex(CallLog.Calls.GEOCODED_LOCATION)
 
 
         while(rs?.moveToNext()!!)
@@ -104,10 +108,11 @@ class ProviderService : AppCompatActivity() , AdapterView.OnItemClickListener {
                 1 -> type = "Incoming"
                 2 -> type = "Outgoing"
                 3 -> type = "Missed Call"
+                4 -> type = "Outgoing"
                 5 -> type = "Rejected Call"
             }
-
-            userArrayList.add(LogDetails(rs.getString(1),type,rs.getString(4)))
+            var date: String = convertLongToTime(rs.getString(4).toLong())
+            userArrayList.add(LogDetails(rs.getString(1),type,date,rs.getString(5)))
             myAdapter.notifyDataSetChanged()
 
         }
@@ -134,5 +139,11 @@ class ProviderService : AppCompatActivity() , AdapterView.OnItemClickListener {
         var colIndex = dataCursor.getColumnIndex(CallLog.Calls.NUMBER)
         var phoneno =dataCursor.getString(colIndex)
         Log.i("providerservice-phno= ",phoneno)
+    }
+
+    fun convertLongToTime(time: Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
+        return format.format(date)
     }
 }

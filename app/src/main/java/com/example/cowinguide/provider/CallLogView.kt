@@ -21,6 +21,7 @@ class CallLogView (private val userList : ArrayList<LogDetails>, val clickListen
         holder.dbNumber.text = user.phone
         holder.type.text = user.type
         holder.timestamp.text = user.timeStamp.toString()
+        holder.location.text = user.location
 
         holder?.cardContainer?.setOnClickListener { clickListener(user, position) }
     }
@@ -35,6 +36,7 @@ class CallLogView (private val userList : ArrayList<LogDetails>, val clickListen
         val dbNumber: TextView = itemView.findViewById<TextView>(R.id.tvNumber)
         val type: TextView = itemView.findViewById<TextView>(R.id.tvType)
         val timestamp = itemView.findViewById<TextView>(R.id.tvDate)
+        val location = itemView.findViewById<TextView>(R.id.tvLocation)
 
         val cardContainer: CardView = itemView.findViewById(R.id.cardView)
 

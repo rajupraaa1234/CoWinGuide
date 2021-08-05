@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.view.menu.ActionMenuItemView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cowinguide.R
+import com.example.cowinguide.provider.LogDetails
 
 class MyAdapter (private val userList : ArrayList<User>): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyAdapter.MyViewHolder {
@@ -24,6 +26,8 @@ class MyAdapter (private val userList : ArrayList<User>): RecyclerView.Adapter<M
         holder.date.text = user.date
         holder.location.text = user.location
         holder.type.text = user.type
+
+        /*holder?.cardContainer?.setOnClickListener { clickListener(user, position) }*/
     }
 
     override fun getItemCount(): Int {
@@ -40,6 +44,8 @@ class MyAdapter (private val userList : ArrayList<User>): RecyclerView.Adapter<M
 
         val location: TextView = itemView.findViewById<TextView>(R.id.pLocation)
         val type: TextView = itemView.findViewById<TextView>(R.id.pType)
+
+        val cardContainer: CardView = itemView.findViewById(R.id.cardView)
 
 
     }
