@@ -49,4 +49,5 @@
     <string name="error">Error getting data!!!</string>
     <string name="internet_problem">Your Device Not Connected through internet</string>
     <string name="your_current_location">please enter your location</string>
+    <string name="address_not_valid">Your Address is not valid</string>
 </resources>

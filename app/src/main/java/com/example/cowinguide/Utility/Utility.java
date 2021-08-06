@@ -3,6 +3,7 @@ package com.example.cowinguide.Utility;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -65,7 +66,7 @@ public class Utility {
         try {
             // May throw an IOException
             address = coder.getFromLocationName(strAddress, 5);
-            if (address == null) {
+            if (address == null || address.size()==0) {
                 return null;
             }
 
@@ -78,6 +79,19 @@ public class Utility {
         }
 
         return p1;
+    }
+
+    public static double getDistance(Double lat1, Double lang1, Double lat2, Double long2){
+        Location startPoint=new Location("locationA");
+        startPoint.setLatitude(lat1);
+        startPoint.setLongitude(lang1);
+
+        Location endPoint=new Location("locationA");
+        endPoint.setLatitude(lat2);
+        endPoint.setLongitude(long2);
+
+        double distance=startPoint.distanceTo(endPoint);
+        return distance;
     }
 
 }

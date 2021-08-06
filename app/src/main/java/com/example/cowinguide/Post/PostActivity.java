@@ -112,12 +112,17 @@ public class PostActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(NetworkHandler.isConnected()){
                     LatLng latLng = Utility.getLocationFromAddress(PostActivity.this,txtLocation.getText().toString().trim());
-                    myLat = latLng.latitude;
-                    myLong = latLng.longitude;
-                    if(myLat!=null && myLong!=null){
-                        UploadDataOnDB();
+
+                    if(latLng==null){
+                        showSnackBar(postLin,getString(R.string.address_not_valid));
                     }else{
-                        showSnackBar(postLin,getString(R.string.your_current_location));
+                        myLat = latLng.latitude;
+                        myLong = latLng.longitude;
+                        if(myLat!=null && myLong!=null){
+                            UploadDataOnDB();
+                        }else{
+                            showSnackBar(postLin,getString(R.string.your_current_location));
+                        }
                     }
                 }else{
                     showSnackBar(postLin,getString(R.string.internet_problem));

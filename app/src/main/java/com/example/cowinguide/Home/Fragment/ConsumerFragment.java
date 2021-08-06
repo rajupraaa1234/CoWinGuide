@@ -1,20 +1,29 @@
 package com.example.cowinguide.Home.Fragment;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,13 +33,31 @@ import com.example.cowinguide.Adapter.CustomerServicePojo;
 import com.example.cowinguide.NetWork.NetworkHandler;
 import com.example.cowinguide.R;
 import com.example.cowinguide.Utility.AppConstant;
+import com.example.cowinguide.Utility.Utility;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static com.example.cowinguide.Utility.Utility.showSnackBar;
 
@@ -79,6 +106,41 @@ public class ConsumerFragment extends Fragment {
     ConsumerApdater adapter;
     FrameLayout Cframlayout;
     TextView nodata;
+    EditText searchBox;
+    ImageView crossImg;
+    Double myLat=0.0;
+    Double myLong=0.0;
+    ImageView CLocation;
+    MarkerOptions mymarkerOptions;
+    SupportMapFragment supportMapFragment;
+    FusedLocationProviderClient client;
+    Boolean isTypedLocation = false;
+    String CityName= "";
+    TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            if(isTypedLocation==false) {
+                if (searchBox.getText().toString().isEmpty()) {
+                    crossImg.setImageResource(R.drawable.ic_cross_fill);
+                    getDataFromFireBase();
+                } else{
+                    crossImg.setImageResource(R.drawable.ic_baseline_done_24);
+                }
+            }else{
+                crossImg.setImageResource(R.drawable.ic_cross_fill);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,7 +155,10 @@ public class ConsumerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_consumer, container, false);
+        View view =  inflater.inflate(R.layout.fragment_consumer, container, false);
+        supportMapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.Cmyfragment);
+        client = LocationServices.getFusedLocationProviderClient(requireActivity());
+        return view;
     }
 
     @Override
@@ -107,17 +172,141 @@ public class ConsumerFragment extends Fragment {
         progressBar = view.findViewById(R.id.CProgress);
         nodata = view.findViewById(R.id.cNoData);
         Cframlayout = view.findViewById(R.id.Cframlayout);
+
+        searchBox = view.findViewById(R.id.name_search_et);
+        crossImg = view.findViewById(R.id.cross_icon);
+        CLocation = view.findViewById(R.id.current_add);
+        searchBox.addTextChangedListener(textWatcher);
         if(NetworkHandler.isConnected()){
             getDataFromFireBase();
         }else{
             showSnackBar(Cframlayout,getString(R.string.internet_problem));
         }
 
+        crossImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isTypedLocation == false && !searchBox.getText().toString().isEmpty()) {
+                      String add = searchBox.getText().toString();
+                      LatLng latLng = Utility.getLocationFromAddress(requireActivity(),add);
+                      if(latLng!=null) {
+                          myLat = latLng.longitude;
+                          myLong = latLng.longitude;
+                          foundLatLong();
+                      }else{
+                          showSnackBar(Cframlayout,getString(R.string.address_not_valid));
+                      }
+                }else{
+                    searchBox.setText("");
+                    isTypedLocation = false;
+                    searchBox.setFocusable(true);
+                    searchBox.setFocusableInTouchMode(true);
+                    searchBox.setClickable(true);
+                    getDataFromFireBase();
+                }
+
+            }
+        });
+
+        CLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(NetworkHandler.isConnected()){
+                    GoogleMapCall();
+                }else{
+                    showSnackBar(Cframlayout,getString(R.string.internet_problem));
+                }
+            }
+        });
     }
 
+    private void GoogleMapCall() {
+        DemandPerMissionForMap();
+    }
+
+    private void DemandPerMissionForMap() {
+        Dexter.withContext(requireActivity())
+                .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                        getMyLocation();
+                    }
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+
+                    }
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                        permissionToken.continuePermissionRequest();
+                    }
+                }).check();
+    }
+    private void getMyLocation() {
+        if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            return;
+        }
+        Task<Location> task = client.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location){
+                supportMapFragment.getMapAsync(new OnMapReadyCallback() {
+                    @Override
+                    public void onMapReady(GoogleMap googleMap) {
+                        //for find direction and cordinate w.r.t earth
+                        if (location != null) {
+                            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                            myLat = location.getLatitude();
+                            myLong = location.getLongitude();
+
+                            getMyPlace(location.getLatitude(), location.getLongitude());
+                            MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("You are here...");
+                            UpdateUi();
+                            foundLatLong();
+                            mymarkerOptions = markerOptions;
+                            googleMap.addMarker(markerOptions);
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+
+                            googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                                @Override
+                                public void onMapClick(LatLng latLng) {
+
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+
+        });
+    }
+
+    private void UpdateUi() {
+        isTypedLocation = true;
+        progressBar.setVisibility(View.VISIBLE);
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(500);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+        searchBox.setText(CityName);
+        searchBox.setFocusable(false);
+        searchBox.setFocusableInTouchMode(false);
+        searchBox.setClickable(false);
+        progressBar.setVisibility(View.GONE);
+    }
 
     private void getDataFromFireBase(){
         progressBar.setVisibility(View.VISIBLE);
+        arr.clear();
         arr = new ArrayList<CustomerServicePojo>();
         adapter = new ConsumerApdater(requireActivity(),arr);
         recyclerView.setAdapter(adapter);
@@ -153,17 +342,51 @@ public class ConsumerFragment extends Fragment {
 
     }
 
-    private double getDistance(Double lat1,Double lang1,Double lat2,Double long2){
-        Location startPoint=new Location("locationA");
-        startPoint.setLatitude(lat1);
-        startPoint.setLongitude(lang1);
 
-        Location endPoint=new Location("locationA");
-        endPoint.setLatitude(lat2);
-        endPoint.setLongitude(long2);
 
-        double distance=startPoint.distanceTo(endPoint);
-        return distance;
+    private void getMyPlace(double latitude, double longitude) {
+        Geocoder geocoder = new Geocoder(requireActivity(), Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String cityName = addresses.get(0).getAddressLine(0);
+        String stateName = addresses.get(0).getAddressLine(1);
+        String countryName = addresses.get(0).getAddressLine(2);
+        CityName = cityName;
+        Log.i("CMyCityName"," " +cityName + " state : " + stateName);
+    }
+
+
+    private void foundLatLong(){
+        progressBar.setVisibility(View.VISIBLE);
+        if(arr!=null || arr.size()>0){
+            ArrayList<CustomerServicePojo> serachArr = new ArrayList<CustomerServicePojo>();
+            for(int i=0;i< arr.size();i++){
+                String lat1 = arr.get(i).getLatitue();
+                String long1 = arr.get(i).getLongitute();
+                double dist = Utility.getDistance(Double.parseDouble(lat1),Double.parseDouble(long1),myLat,myLong);
+                Log.i("MyDistance"," " + dist);
+                if(dist<=1000){
+                    serachArr.add(arr.get(i));
+                }
+            }
+            if(serachArr.size()==0){
+                nodata.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+            }else {
+                adapter = new ConsumerApdater(requireActivity(), serachArr);
+                recyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                Log.i("MyLocation", " " + myLat + " " + myLong);
+                nodata.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+            }
+            progressBar.setVisibility(View.GONE);
+        }
+
     }
 
     
