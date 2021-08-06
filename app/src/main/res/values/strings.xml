@@ -55,4 +55,5 @@
     <string name="please_enter_last_name">please enter last name</string>
     <string name="last_name_length">last name\'s length must be greater than or equal to 3</string>
     <string name="services_type">please select your service type</string>
+    <string name="location_failed">Location Filed</string>
 </resources>

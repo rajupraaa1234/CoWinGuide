@@ -1,15 +1,19 @@
 package com.example.cowinguide.Home.Fragment;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,7 +37,9 @@ import com.example.cowinguide.Adapter.CustomerServicePojo;
 import com.example.cowinguide.NetWork.NetworkHandler;
 import com.example.cowinguide.R;
 import com.example.cowinguide.Utility.AppConstant;
+import com.example.cowinguide.Utility.GPSTracker;
 import com.example.cowinguide.Utility.Utility;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -177,6 +183,7 @@ public class ConsumerFragment extends Fragment {
         crossImg = view.findViewById(R.id.cross_icon);
         CLocation = view.findViewById(R.id.current_add);
         searchBox.addTextChangedListener(textWatcher);
+        setAdapter();
         if(NetworkHandler.isConnected()){
             getDataFromFireBase();
         }else{
@@ -186,8 +193,10 @@ public class ConsumerFragment extends Fragment {
         crossImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i("OnCrossClicked : ","Clicked");
                 if(isTypedLocation == false && !searchBox.getText().toString().isEmpty()) {
                       String add = searchBox.getText().toString();
+                    Log.i("OnCrossClicked : ","IfClicked");
                       LatLng latLng = Utility.getLocationFromAddress(requireActivity(),add);
                       if(latLng!=null) {
                           myLat = latLng.longitude;
@@ -197,12 +206,15 @@ public class ConsumerFragment extends Fragment {
                           showSnackBar(Cframlayout,getString(R.string.address_not_valid));
                       }
                 }else{
-                    searchBox.setText("");
-                    isTypedLocation = false;
-                    searchBox.setFocusable(true);
-                    searchBox.setFocusableInTouchMode(true);
-                    searchBox.setClickable(true);
-                    getDataFromFireBase();
+                    if(!searchBox.getText().toString().isEmpty()) {
+                        Log.i("OnCrossClicked : ", "ElseClicked");
+                        searchBox.setText("");
+                        isTypedLocation = false;
+                        searchBox.setFocusable(true);
+                        searchBox.setFocusableInTouchMode(true);
+                        searchBox.setClickable(true);
+                        getDataFromFireBase();
+                    }
                 }
 
             }
@@ -211,9 +223,12 @@ public class ConsumerFragment extends Fragment {
         CLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i("OnCrossClicked : ","GoogleIfClicked");
                 if(NetworkHandler.isConnected()){
+                    Log.i("OnCrossClicked : ","GoogleIfClicked");
                     GoogleMapCall();
                 }else{
+                    Log.i("OnCrossClicked : ","GoogleElseClicked");
                     showSnackBar(Cframlayout,getString(R.string.internet_problem));
                 }
             }
@@ -221,66 +236,7 @@ public class ConsumerFragment extends Fragment {
     }
 
     private void GoogleMapCall() {
-        DemandPerMissionForMap();
-    }
-
-    private void DemandPerMissionForMap() {
-        Dexter.withContext(requireActivity())
-                .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-                .withListener(new PermissionListener() {
-                    @Override
-                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                        getMyLocation();
-                    }
-                    @Override
-                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-
-                    }
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
-                        permissionToken.continuePermissionRequest();
-                    }
-                }).check();
-    }
-    private void getMyLocation() {
-        if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            return;
-        }
-        Task<Location> task = client.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location){
-                supportMapFragment.getMapAsync(new OnMapReadyCallback() {
-                    @Override
-                    public void onMapReady(GoogleMap googleMap) {
-                        //for find direction and cordinate w.r.t earth
-                        if (location != null) {
-                            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                            myLat = location.getLatitude();
-                            myLong = location.getLongitude();
-
-                            getMyPlace(location.getLatitude(), location.getLongitude());
-                            MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("You are here...");
-                            UpdateUi();
-                            foundLatLong();
-                            mymarkerOptions = markerOptions;
-                            googleMap.addMarker(markerOptions);
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-
-                            googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                                @Override
-                                public void onMapClick(LatLng latLng) {
-
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-
-        });
+        getCurrentLocationUsingGPS();
     }
 
     private void UpdateUi() {
@@ -304,13 +260,18 @@ public class ConsumerFragment extends Fragment {
         progressBar.setVisibility(View.GONE);
     }
 
-    private void getDataFromFireBase(){
-        progressBar.setVisibility(View.VISIBLE);
-        arr.clear();
-        arr = new ArrayList<CustomerServicePojo>();
+    public void setAdapter(){
         adapter = new ConsumerApdater(requireActivity(),arr);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+    }
+    private void getDataFromFireBase(){
+        progressBar.setVisibility(View.VISIBLE);
+        int size = arr.size();
+        arr.clear();
+        adapter.notifyItemRangeRemoved(0,size);
+        //arr = new ArrayList<CustomerServicePojo>();
+
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
         firebaseFirestore.collection(AppConstant.Collections).get()
@@ -327,6 +288,8 @@ public class ConsumerFragment extends Fragment {
                             nodata.setVisibility(View.GONE);
                             recyclerView.setVisibility(View.VISIBLE);
                             List<CustomerServicePojo> types = documentSnapshots.toObjects(CustomerServicePojo.class);
+                            Log.i("ListSize"," " +types.size());
+                            arr.clear();
                             arr.addAll(types);
                             adapter.notifyDataSetChanged();
                             progressBar.setVisibility(View.GONE);
@@ -377,6 +340,7 @@ public class ConsumerFragment extends Fragment {
                 nodata.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
             }else {
+                arr = serachArr;
                 adapter = new ConsumerApdater(requireActivity(), serachArr);
                 recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
@@ -386,8 +350,51 @@ public class ConsumerFragment extends Fragment {
             }
             progressBar.setVisibility(View.GONE);
         }
-
     }
 
-    
+    public void getCurrentLocationUsingGPS() {
+        if (checkPermissionLocation()) {
+            Location locationAndCity = getLocationAndCity(requireActivity(), requireActivity());
+            if (locationAndCity != null) {
+                myLat = locationAndCity.getLatitude();
+                myLong = locationAndCity.getLongitude();
+                getMyPlace(myLat, myLong);
+                UpdateUi();
+                foundLatLong();
+            }else{
+                showSnackBar(Cframlayout,getString(R.string.location_failed));
+            }
+        } else {
+            reqForPermissionLocation();
+        }
+    }
+
+    private boolean checkPermissionLocation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int ACCESS_FINE_LOCATION = ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION);
+            return ACCESS_FINE_LOCATION == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return true;
+        }
+    }
+
+    private void reqForPermissionLocation() {
+        requestPermissions(new String[]{Manifest.permission
+                .ACCESS_FINE_LOCATION}, 44);
+    }
+
+    public Location getLocationAndCity(Context context, Activity activity) {
+        if (ContextCompat.checkSelfPermission(context,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(context,
+                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            GPSTracker gpsTracker = new GPSTracker(activity);
+            Location location = new Location("");
+            location.setLatitude(gpsTracker.getLatitude());
+            location.setLongitude(gpsTracker.getLongitude());
+            Log.i("MyGPSTracker " , " " + gpsTracker.getLatitude() + " " + gpsTracker.getLongitude());
+            return location;
+        }
+        return null;
+    }
 }

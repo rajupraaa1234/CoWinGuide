@@ -3,14 +3,17 @@ package com.example.cowinguide.Post;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +32,7 @@ import com.example.cowinguide.Home.HomeActivity;
 import com.example.cowinguide.NetWork.NetworkHandler;
 import com.example.cowinguide.R;
 import com.example.cowinguide.Utility.AppConstant;
+import com.example.cowinguide.Utility.GPSTracker;
 import com.example.cowinguide.Utility.SessionManager.Session.Sessionmanager;
 import com.example.cowinguide.Utility.Utility;
 import com.example.cowinguide.View.Login.LoginActivity;
@@ -160,7 +164,7 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(NetworkHandler.isConnected()){
-                    DemandPerMissionForMap();
+                    getCurrentLocationUsingGPS();
                 }else{
                     showSnackBar(postLin,getString(R.string.internet_problem));
                 }
@@ -216,63 +220,6 @@ public class PostActivity extends AppCompatActivity {
             date.setText("" + data.getDate());
             phone.setText(data.getNumber());
         }
-    }
-
-    private void DemandPerMissionForMap() {
-        Dexter.withContext(getApplicationContext())
-                .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-                .withListener(new PermissionListener() {
-                    @Override
-                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                        getMyLocation();
-                    }
-                    @Override
-                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-
-                    }
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
-                        permissionToken.continuePermissionRequest();
-                    }
-                }).check();
-    }
-    private void getMyLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            return;
-        }
-        Task<Location> task = client.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location){
-                supportMapFragment.getMapAsync(new OnMapReadyCallback() {
-                    @Override
-                    public void onMapReady(GoogleMap googleMap) {
-                        //for find direction and cordinate w.r.t earth
-                        if (location != null) {
-                            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                            myLat = location.getLatitude();
-                            myLong = location.getLongitude();
-                            getMyPlace(location.getLatitude(), location.getLongitude());
-                            MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("You are here...");
-                            UpdateUi();
-                            mymarkerOptions = markerOptions;
-                            googleMap.addMarker(markerOptions);
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-
-                            googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                                @Override
-                                public void onMapClick(LatLng latLng) {
-
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-
-        });
     }
 
     private void UpdateUi() {
@@ -358,5 +305,51 @@ public class PostActivity extends AppCompatActivity {
                         showSnackBar(postLin,getString(R.string.poat_faild));
                     }
                 });
+    }
+
+
+    public void getCurrentLocationUsingGPS() {
+        if (checkPermissionLocation()) {
+            Location locationAndCity = getLocationAndCity(this, this);
+            if (locationAndCity != null) {
+                myLat = locationAndCity.getLatitude();
+                myLong = locationAndCity.getLongitude();
+                getMyPlace(myLat, myLong);
+                UpdateUi();
+            }else{
+                showSnackBar(postLin,getString(R.string.location_failed));
+            }
+        } else {
+            reqForPermissionLocation();
+        }
+    }
+
+    private boolean checkPermissionLocation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int ACCESS_FINE_LOCATION = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+            return ACCESS_FINE_LOCATION == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return true;
+        }
+    }
+
+    private void reqForPermissionLocation() {
+        requestPermissions(new String[]{Manifest.permission
+                .ACCESS_FINE_LOCATION}, 44);
+    }
+
+    public Location getLocationAndCity(Context context, Activity activity) {
+        if (ContextCompat.checkSelfPermission(context,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(context,
+                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            GPSTracker gpsTracker = new GPSTracker(activity);
+            Location location = new Location("");
+            location.setLatitude(gpsTracker.getLatitude());
+            location.setLongitude(gpsTracker.getLongitude());
+            Log.i("MyGPSTracker " , " " + gpsTracker.getLatitude() + " " + gpsTracker.getLongitude());
+            return location;
+        }
+        return null;
     }
 }
