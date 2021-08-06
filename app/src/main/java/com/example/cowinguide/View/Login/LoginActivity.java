@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -47,7 +48,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     TextView loginBtn;
     RelativeLayout LoginRelMain;
     ProgressBar progressBar;
-    Button mgoogle;
+    LinearLayout mgoogle;
     FirebaseAuth firebaseAuth;
     GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;

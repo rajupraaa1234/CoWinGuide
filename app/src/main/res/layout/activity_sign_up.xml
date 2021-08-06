@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/mainRel"
-    android:background="@drawable/virus1"
+    android:background="@drawable/covid2"
     android:layout_height="match_parent"
 
     tools:context=".View.Login.SignUp.SignUpActivity">
@@ -266,6 +266,7 @@
             <com.example.cowinguide.custom_font.MyTextView
                 android:layout_weight="1"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:text="@string/need_help"
                 android:textColor="#FFF"
