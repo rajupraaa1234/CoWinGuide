@@ -237,8 +237,8 @@ public class PostActivity extends AppCompatActivity {
         };
         thread.start();
         txtLocation.setText(MycityName);
-        txtLocation.setEnabled(false);
         txtLocation.setFocusable(false);
+        txtLocation.setFocusableInTouchMode(false);
         txtLocation.setClickable(false);
         progress.setVisibility(View.GONE);
     }
