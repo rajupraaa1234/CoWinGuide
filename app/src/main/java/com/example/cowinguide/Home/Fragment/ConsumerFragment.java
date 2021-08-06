@@ -1,5 +1,6 @@
 package com.example.cowinguide.Home.Fragment;
 
+import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -78,6 +79,7 @@ public class ConsumerFragment extends Fragment {
     ConsumerApdater adapter;
     FrameLayout Cframlayout;
     TextView nodata;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +119,8 @@ public class ConsumerFragment extends Fragment {
     private void getDataFromFireBase(){
         progressBar.setVisibility(View.VISIBLE);
         arr = new ArrayList<CustomerServicePojo>();
+        adapter = new ConsumerApdater(requireActivity(),arr);
+        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -135,8 +139,6 @@ public class ConsumerFragment extends Fragment {
                             recyclerView.setVisibility(View.VISIBLE);
                             List<CustomerServicePojo> types = documentSnapshots.toObjects(CustomerServicePojo.class);
                             arr.addAll(types);
-                            adapter = new ConsumerApdater(requireActivity(),arr);
-                            recyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                             progressBar.setVisibility(View.GONE);
                         }
@@ -149,6 +151,19 @@ public class ConsumerFragment extends Fragment {
                         }
                     });
 
+    }
+
+    private double getDistance(Double lat1,Double lang1,Double lat2,Double long2){
+        Location startPoint=new Location("locationA");
+        startPoint.setLatitude(lat1);
+        startPoint.setLongitude(lang1);
+
+        Location endPoint=new Location("locationA");
+        endPoint.setLatitude(lat2);
+        endPoint.setLongitude(long2);
+
+        double distance=startPoint.distanceTo(endPoint);
+        return distance;
     }
 
     

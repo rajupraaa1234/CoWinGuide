@@ -79,6 +79,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         addFragment(consumerFragment, false);
         currentFragment = consumerFragment;
+        navigation.setSelectedItemId(R.id.consumer_nav);
 
         navigation.setOnNavigationItemSelectedListener(this::onNavigationItemSelected);
 
@@ -163,6 +164,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
         customDialog=new CustomDialog(this);
         EventBus.getDefault().register(this);
+        addFragment(consumerFragment, false);
+        navigation.setSelectedItemId(R.id.consumer_nav);
+        currentFragment = consumerFragment;
     }
 
     private void logoutUser() {

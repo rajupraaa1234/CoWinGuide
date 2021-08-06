@@ -1,6 +1,8 @@
 package com.example.cowinguide.Utility;
 
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -10,9 +12,12 @@ import android.view.WindowManager;
 
 import com.example.cowinguide.R;
 import com.example.cowinguide.View.Login.SignUp.SignUpActivity;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class Utility {
@@ -50,6 +55,29 @@ public class Utility {
                 + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
                 + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
                 + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$").matcher(email).matches();
+    }
+
+    public static LatLng getLocationFromAddress(Context context,String strAddress) {
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try {
+            // May throw an IOException
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+
+            Address location = address.get(0);
+            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
+
+        } catch (IOException ex) {
+
+            ex.printStackTrace();
+        }
+
+        return p1;
     }
 
 }

@@ -20,7 +20,26 @@ public class CustomerServicePojo {
     String ServiceType;
     String date;
     String location;
+    String Latitue;
+    String Longitute;
     String name;
+
+    public String getLatitue() {
+        return Latitue;
+    }
+
+    public void setLatitue(String latitue) {
+        Latitue = latitue;
+    }
+
+    public String getLongitute() {
+        return Longitute;
+    }
+
+    public void setLongitute(String longitute) {
+        Longitute = longitute;
+    }
+
     String number;
 
     public String getCalltype() {

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -26,6 +27,7 @@ import com.example.cowinguide.NetWork.NetworkHandler;
 import com.example.cowinguide.R;
 import com.example.cowinguide.Utility.AppConstant;
 import com.example.cowinguide.Utility.SessionManager.Session.Sessionmanager;
+import com.example.cowinguide.Utility.Utility;
 import com.example.cowinguide.View.Login.LoginActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -72,16 +74,17 @@ public class PostActivity extends AppCompatActivity {
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
     MarkerOptions mymarkerOptions;
+    Double myLat = 0.0;
+    Double myLong = 0.0;
     private String MycityName="";
-
-
-
+    private boolean isTypedAddress = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
         init();
+        isTypedAddress = false;
         getIntentData();
     }
 
@@ -108,7 +111,14 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(NetworkHandler.isConnected()){
-                    UploadDataOnDB();
+                    LatLng latLng = Utility.getLocationFromAddress(PostActivity.this,txtLocation.getText().toString().trim());
+                    myLat = latLng.latitude;
+                    myLong = latLng.longitude;
+                    if(myLat!=null && myLong!=null){
+                        UploadDataOnDB();
+                    }else{
+                        showSnackBar(postLin,getString(R.string.your_current_location));
+                    }
                 }else{
                     showSnackBar(postLin,getString(R.string.internet_problem));
                 }
@@ -119,20 +129,6 @@ public class PostActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(NetworkHandler.isConnected()){
                     DemandPerMissionForMap();
-                    progress.setVisibility(View.VISIBLE);
-                    Thread thread = new Thread(){
-                        @Override
-                        public void run() {
-                            try {
-                                Thread.sleep(500);
-                                txtLocation.setText(MycityName);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    };
-                    thread.start();
-                    progress.setVisibility(View.GONE);
                 }else{
                     showSnackBar(postLin,getString(R.string.internet_problem));
                 }
@@ -215,8 +211,11 @@ public class PostActivity extends AppCompatActivity {
                         //for find direction and cordinate w.r.t earth
                         if (location != null) {
                             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                            myLat = location.getLatitude();
+                            myLong = location.getLongitude();
                             getMyPlace(location.getLatitude(), location.getLongitude());
                             MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("You are here...");
+                            UpdateUi();
                             mymarkerOptions = markerOptions;
                             googleMap.addMarker(markerOptions);
                             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
@@ -225,7 +224,6 @@ public class PostActivity extends AppCompatActivity {
                                 @Override
                                 public void onMapClick(LatLng latLng) {
 
-                                    //   changeLocation(latLng,googleMap);
                                 }
                             });
                         }
@@ -234,6 +232,27 @@ public class PostActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+    private void UpdateUi() {
+        isTypedAddress = true;
+        progress.setVisibility(View.VISIBLE);
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(500);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+        txtLocation.setText(MycityName);
+        txtLocation.setEnabled(false);
+        txtLocation.setFocusable(false);
+        txtLocation.setClickable(false);
+        progress.setVisibility(View.GONE);
     }
 
     private void getMyPlace(double latitude, double longitude) {
@@ -268,6 +287,8 @@ public class PostActivity extends AppCompatActivity {
         map.put("location",Location);
         map.put("date",eDate);
         map.put("ServiceType",ServiceType);
+        map.put("Latitue",String.valueOf(myLat));
+        map.put("Longitute",String.valueOf(myLong));
 
         firebaseFirestore.collection(AppConstant.Collections)
                 .add(map)
