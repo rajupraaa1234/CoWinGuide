@@ -12,6 +12,6 @@
         android:drawable="@drawable/c3"
         android:duration="250" />
     <item
-        android:drawable="@drawable/hospital"
+        android:drawable="@drawable/hospital1"
         android:duration="250" />
 </animation-list>

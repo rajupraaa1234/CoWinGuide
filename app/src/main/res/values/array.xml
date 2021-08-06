@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="ServicesName">
+        <item>Please Select Service</item>
+        <item>Ambulance Service</item>
+        <item>Medicine Service</item>
+        <item>Oxygen Service</item>
+        <item>Hospital Service</item>
+    </string-array>
+</resources>

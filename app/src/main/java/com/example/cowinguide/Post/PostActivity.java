@@ -14,11 +14,14 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.cowinguide.Adapter.CallLogPojo;
@@ -61,7 +64,7 @@ public class PostActivity extends AppCompatActivity {
     EditText fname;
     EditText sname;
     EditText txtLocation;
-    EditText service_type;
+    Spinner service_type;
     TextView callType;
     TextView date;
     TextView phone;
@@ -70,7 +73,7 @@ public class PostActivity extends AppCompatActivity {
     ProgressBar progress;
     LinearLayout postLin;
     ImageView backArrow;
-
+    String ServiceType = "";
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
     MarkerOptions mymarkerOptions;
@@ -84,8 +87,32 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
         init();
+        setUpSpinner();
         isTypedAddress = false;
         getIntentData();
+    }
+
+    private void setUpSpinner() {
+        ArrayAdapter<CharSequence> adp3 = ArrayAdapter.createFromResource(this,
+                R.array.ServicesName, android.R.layout.simple_list_item_1);
+
+        adp3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        service_type.setAdapter(adp3);
+        service_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
+                // TODO Auto-generated method stub
+                if(position!=0){
+                    ServiceType = service_type.getSelectedItem().toString();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
     }
 
     private void init(){
@@ -147,13 +174,22 @@ public class PostActivity extends AppCompatActivity {
         String first_name = fname.getText().toString().trim();
         String last_name = sname.getText().toString().trim();
         String Location = txtLocation.getText().toString().trim();
-        String ServiceType = service_type.getText().toString().trim();
         String CallType = callType.getText().toString().trim();
         String eDate = date.getText().toString().trim();
         String ePhone = phone.getText().toString().trim();
 
         if(first_name.isEmpty() || last_name.isEmpty() || Location.isEmpty() || ServiceType.isEmpty() || CallType.isEmpty() || eDate.isEmpty() || ePhone.isEmpty()){
-            showSnackBar(postLin,getString(R.string.please_enter_all_details));
+            if(first_name.isEmpty()){
+                showSnackBar(postLin,getString(R.string.please_enter_first_name));
+            }else if(first_name.length()<3){
+                showSnackBar(postLin,getString(R.string.first_name_length));
+            }else if(last_name.isEmpty()){
+                showSnackBar(postLin,getString(R.string.please_enter_last_name));
+            }else if(last_name.length()<3){
+                showSnackBar(postLin,getString(R.string.last_name_length));
+            }else if(ServiceType.isEmpty()){
+                showSnackBar(postLin,getString(R.string.services_type));
+            }
         }else{
             hitFireBaseDataBase();
         }
@@ -280,7 +316,6 @@ public class PostActivity extends AppCompatActivity {
         String first_name = fname.getText().toString().trim();
         String last_name = sname.getText().toString().trim();
         String Location = txtLocation.getText().toString().trim();
-        String ServiceType = service_type.getText().toString().trim();
         String CallType = callType.getText().toString().trim();
         String eDate = date.getText().toString().trim();
         String ePhone = phone.getText().toString().trim();

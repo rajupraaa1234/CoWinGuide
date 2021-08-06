@@ -123,7 +123,7 @@
 
 
 
-                <EditText
+                <Spinner
                     android:id="@+id/service_type"
                     style="@style/loginEmailEditText"
                     android:layout_width="match_parent"

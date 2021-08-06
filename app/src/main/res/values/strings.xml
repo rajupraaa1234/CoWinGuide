@@ -50,4 +50,9 @@
     <string name="internet_problem">Your Device Not Connected through internet</string>
     <string name="your_current_location">please enter your location</string>
     <string name="address_not_valid">Your Address is not valid</string>
+    <string name="please_enter_first_name">please enter first name</string>
+    <string name="first_name_length">First name\'s length must be greater than or equal to 3</string>
+    <string name="please_enter_last_name">please enter last name</string>
+    <string name="last_name_length">last name\'s length must be greater than or equal to 3</string>
+    <string name="services_type">please select your service type</string>
 </resources>
