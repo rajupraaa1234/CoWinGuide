@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.cowinguide.Adapter.ConsumerApdater;
 import com.example.cowinguide.Adapter.CustomerServicePojo;
+import com.example.cowinguide.NetWork.NetworkHandler;
 import com.example.cowinguide.R;
 import com.example.cowinguide.Utility.AppConstant;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -104,7 +105,12 @@ public class ConsumerFragment extends Fragment {
         progressBar = view.findViewById(R.id.CProgress);
         nodata = view.findViewById(R.id.cNoData);
         Cframlayout = view.findViewById(R.id.Cframlayout);
-        getDataFromFireBase();
+        if(NetworkHandler.isConnected()){
+            getDataFromFireBase();
+        }else{
+            showSnackBar(Cframlayout,getString(R.string.internet_problem));
+        }
+
     }
 
 

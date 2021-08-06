@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.example.cowinguide.Adapter.CallLogPojo;
 import com.example.cowinguide.Home.HomeActivity;
+import com.example.cowinguide.NetWork.NetworkHandler;
 import com.example.cowinguide.R;
 import com.example.cowinguide.Utility.AppConstant;
 import com.example.cowinguide.Utility.SessionManager.Session.Sessionmanager;
@@ -106,19 +107,39 @@ public class PostActivity extends AppCompatActivity {
         continue_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UploadDataOnDB();
+                if(NetworkHandler.isConnected()){
+                    UploadDataOnDB();
+                }else{
+                    showSnackBar(postLin,getString(R.string.internet_problem));
+                }
             }
         });
         currentLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                txtLocation.setText(MycityName);
+                if(NetworkHandler.isConnected()){
+                    DemandPerMissionForMap();
+                    progress.setVisibility(View.VISIBLE);
+                    Thread thread = new Thread(){
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(500);
+                                txtLocation.setText(MycityName);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    thread.start();
+                    progress.setVisibility(View.GONE);
+                }else{
+                    showSnackBar(postLin,getString(R.string.internet_problem));
+                }
             }
         });
         supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.myfragment);
         client = LocationServices.getFusedLocationProviderClient(this);
-        DemandPerMissionForMap();
-
     }
 
     private void UploadDataOnDB() {
@@ -192,20 +213,22 @@ public class PostActivity extends AppCompatActivity {
                     @Override
                     public void onMapReady(GoogleMap googleMap) {
                         //for find direction and cordinate w.r.t earth
-                        LatLng latLng=new LatLng(location.getLatitude(),location.getLongitude());
-                        getMyPlace(location.getLatitude(),location.getLongitude());
-                        MarkerOptions markerOptions=new MarkerOptions().position(latLng).title("You are here...");
-                        mymarkerOptions=markerOptions;
-                        googleMap.addMarker(markerOptions);
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
+                        if (location != null) {
+                            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                            getMyPlace(location.getLatitude(), location.getLongitude());
+                            MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("You are here...");
+                            mymarkerOptions = markerOptions;
+                            googleMap.addMarker(markerOptions);
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
 
-                        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                            @Override
-                            public void onMapClick(LatLng latLng) {
+                            googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                                @Override
+                                public void onMapClick(LatLng latLng) {
 
-                             //   changeLocation(latLng,googleMap);
-                            }
-                        });
+                                    //   changeLocation(latLng,googleMap);
+                                }
+                            });
+                        }
                     }
                 });
             }

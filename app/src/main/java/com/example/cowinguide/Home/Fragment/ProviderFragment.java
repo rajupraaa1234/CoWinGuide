@@ -101,8 +101,9 @@ public class ProviderFragment extends Fragment {
         if(ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(requireActivity(), new String[]{ Manifest.permission.READ_CALL_LOG},101);
         }
-        else
+        else {
             getCallDetails();
+        }
     }
 
     private void init(View view) {
@@ -162,5 +163,6 @@ public class ProviderFragment extends Fragment {
         recyclerView.setLayoutManager(Manager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 }
