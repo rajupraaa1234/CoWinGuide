@@ -28,6 +28,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.cowinguide.Adapter.CallLogPojo;
+import com.example.cowinguide.CallBack.CommonDialogListner;
+import com.example.cowinguide.Dialog.CustomDialog;
 import com.example.cowinguide.Home.HomeActivity;
 import com.example.cowinguide.NetWork.NetworkHandler;
 import com.example.cowinguide.R;
@@ -63,7 +65,7 @@ import java.util.Locale;
 
 import static com.example.cowinguide.Utility.Utility.showSnackBar;
 
-public class PostActivity extends AppCompatActivity {
+public class PostActivity extends AppCompatActivity implements CommonDialogListner {
 
     EditText fname;
     EditText sname;
@@ -82,6 +84,7 @@ public class PostActivity extends AppCompatActivity {
     FusedLocationProviderClient client;
     MarkerOptions mymarkerOptions;
     Double myLat = 0.0;
+    CustomDialog customDialog;
     Double myLong = 0.0;
     private String MycityName="";
     private boolean isTypedAddress = false;
@@ -132,6 +135,7 @@ public class PostActivity extends AppCompatActivity {
         progress = findViewById(R.id.progress);
         postLin = findViewById(R.id.postLin);
         backArrow = findViewById(R.id.back_arrow);
+        customDialog = new CustomDialog(this);
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -268,7 +272,7 @@ public class PostActivity extends AppCompatActivity {
         String ePhone = phone.getText().toString().trim();
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         HashMap<String,String> map = new HashMap<String,String>();
-        map.put("name",first_name+last_name);
+        map.put("name",first_name+" "+last_name);
         map.put("number",ePhone);
         map.put("Calltype",CallType);
         map.put("location",Location);
@@ -283,19 +287,8 @@ public class PostActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                          progress.setVisibility(View.GONE);
-                        showSnackBar(postLin,getString(R.string.post_successfully));
-                        Thread thread = new Thread(){
-                            @Override
-                            public void run() {
-                                try {
-                                    Thread.sleep(1000);
-                                    finish();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        };
-                        thread.start();
+                        OpenAlertForLogout();
+                        //showSnackBar(postLin,getString(R.string.post_successfully));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -351,5 +344,24 @@ public class PostActivity extends AppCompatActivity {
             return location;
         }
         return null;
+    }
+
+    private void OpenAlertForLogout() {
+        customDialog.setDailog("S", AppConstant.LOGOUT_ALERT,"Yes","No", AppConstant.USER_LOGOUT,getString(R.string.your_post_has_been_posted),"Success");
+    }
+
+    @Override
+    public void OnYesClickListner(int code) {
+
+    }
+
+    @Override
+    public void OnNoClickListner(int code) {
+
+    }
+
+    @Override
+    public void OnCloseClickListner(int code) {
+        onBackPressed();
     }
 }
