@@ -26,11 +26,13 @@ import com.example.cowinguide.Adapter.CallLogAdapter;
 import com.example.cowinguide.Adapter.CallLogPojo;
 import com.example.cowinguide.CallBack.OnItemClickListner;
 import com.example.cowinguide.R;
+import com.example.cowinguide.Utility.Utility;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -152,11 +154,12 @@ public class ProviderFragment extends Fragment {
 
             CallLogPojo obj = new CallLogPojo();
             obj.setDate(callDayTime.toString());
-            obj.setDuaration(callType);
+            obj.setDuaration(Utility.formatSeconds(Integer.parseInt(callDuration)));
             obj.setNumber(phNumber);
             obj.setType(dir);
             arr.add(obj);
         }
+        ReverseallData();
         //managedCursor.close();
         CallLogAdapter adapter=new CallLogAdapter(requireActivity(),arr);
         LinearLayoutManager Manager = new LinearLayoutManager(requireActivity());
@@ -164,5 +167,15 @@ public class ProviderFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    private void ReverseallData() {
+        int i = 0;
+        int j = arr.size()-1;
+        while(i<j){
+            Collections.swap(arr,i,j);
+            i++;
+            j--;
+        }
     }
 }

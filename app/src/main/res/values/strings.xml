@@ -56,4 +56,5 @@
     <string name="last_name_length">last name\'s length must be greater than or equal to 3</string>
     <string name="services_type">please select your service type</string>
     <string name="location_failed">Location Filed</string>
+    <string name="incoming_call">InComing Call</string>
 </resources>

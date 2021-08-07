@@ -54,7 +54,7 @@ public class ConsumerApdater extends RecyclerView.Adapter<ConsumerApdater.ViewHo
         holder.Caddress.setText(res.getLocation());
         holder.Cdate.setText(res.getDate());
         holder.Cname.setText(res.name);
-        holder.Consumer_calltype.setText(res.getCalltype());
+        holder.Consumer_calltype.setText(res.getCalltype() + " Call");
         holder.consumer_service_type.setText(res.getServiceType());
         holder.CphoneNumber.setText(res.getNumber());
         

@@ -29,4 +29,5 @@
     <dimen name="dp7">7dp</dimen>
     <dimen name="dp24">24dp</dimen>
     <dimen name="sp25">25sp</dimen>
+    <dimen name="dp12">12dp</dimen>
 </resources>

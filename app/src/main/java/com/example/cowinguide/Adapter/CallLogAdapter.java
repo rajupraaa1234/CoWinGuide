@@ -54,7 +54,7 @@ public class CallLogAdapter extends RecyclerView.Adapter<CallLogAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
         CallLogPojo res=arr.get(position);
-        holder.duration.setText(res.getDuaration() + " Min");
+        holder.duration.setText(res.getDuaration());
         holder.calltype.setText(res.getType()+" Call");
         holder.phoneNumber.setText(res.getNumber());
         holder.Idate.setText(res.getDate());
