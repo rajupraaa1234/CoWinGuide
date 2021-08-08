@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="get_started">Get Started</string>
+    <string name="create_account">खाता बनाएं</string>
+    <string name="contact_number">संपर्क संख्या</string>
+    <string name="email_address">ईमेल</string>
+    <string name="confirm_password">पासवर्ड की पुष्टि कीजिये</string>
+    <string name="signin">साइनइन करें !</string>
+    <string name="please_enter_username">कृपया उपयोगकर्ता नाम दर्ज करें</string>
+    <string name="nusername_length">उपयोगकर्ता नाम की लंबाई 3 से अधिक या उसके बराबर होनी चाहिए</string>
+    <string name="please_enter_phone_numer">कृपया फ़ोन नंबर दर्ज करें</string>
+    <string name="please_enter_valid_phone_number">कृपया एक वैध नंबर डालें</string>
+    <string name="please_enter_valid_email">कृपया वैध ईमेल दर्ज़ करें</string>
+    <string name="please_enter_password">कृप्या पास्वर्ड भरो</string>
+    <string name="pass_length">पासवर्ड की लंबाई 3 से अधिक होनी चाहिए</string>
+    <string name="please_enter_c_pass">कृपया पासवर्ड दर्ज करें</string>
+    <string name="pass_mismatch">पासवर्ड की पुष्टि कीजिये</string>
+    <string name="user_created">उपयोगकर्ता सफलतापूर्वक बनाया गया...</string>
+    <string name="user_register_failed">उपयोगकर्ता पंजीकरण विफल</string>
+    <string name="please_enter_email_id">कृपया ईमेल आईडी दर्ज करें</string>
+    <string name="login_success">उपयोगकर्ता लॉगिन सफलतापूर्वक...</string>
+    <string name="logout_successfully">लॉगआउट सफलतापूर्वक</string>
+    <string name="name_filter" translatable="false">qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM।</string>
+    <string name="internet_not_connected">इंटरनेट कनेक्ट नहीं है</string>
+    <string name="consumer">उपभोक्ता</string>
+    <string name="provider">प्रदाता</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">नमस्ते खाली टुकड़ा</string>
+    <string name="are_you_sure_want_to_logout">क्या आप वाकई लॉगआउट करना चाहते हैं?</string>
+    <string name="last_name">उपनाम</string>
+    <string name="first_name">नाम</string>
+    <string name="location">कृपया अपना स्थान दर्ज करें</string>
+    <string name="email">ईमेल</string>
+    <string name="post">पद</string>
+    <string name="please_enter_your_service_type">कृपया अपना सेवा प्रकार दर्ज करें</string>
+    <string name="number_of_services_available">उपलब्ध सेवाओं की संख्या</string>
+    <string name="call_log_list">कॉल लॉग सूची</string>
+    <string name="call_type">सभी प्रकारसी</string>
+    <string name="date">दिनांक</string>
+    <string name="get_current_location">वर्तमान स्थान प्राप्त करें</string>
+    <string name="please_enter_all_details">कृपया सभी विवरण दर्ज करें</string>
+    <string name="post_successfully">सफलतापूर्वक पोस्ट करें...</string>
+    <string name="poat_faild">पोस्ट विफल !!</string>
+    <string name="error">डेटा प्राप्त करने में त्रुटि!!!</string>
+    <string name="internet_problem">आपका डिवाइस इंटरनेट के माध्यम से कनेक्ट नहीं है</string>
+    <string name="your_current_location">कृपया अपना स्थान दर्ज करें</string>
+    <string name="address_not_valid">आपका पता मान्य नहीं है</string>
+    <string name="please_enter_first_name">कृपया पहला नाम दर्ज करें</string>
+    <string name="first_name_length">प्रथम नाम की लंबाई 3 से अधिक या उसके बराबर होनी चाहिए</string>
+    <string name="please_enter_last_name">कृपया अंतिम नाम दर्ज करें</string>
+    <string name="last_name_length">उपनाम की लंबाई 3 से अधिक या उसके बराबर होनी चाहिए</string>
+    <string name="services_type">कृपया अपना सेवा प्रकार चुनें</string>
+    <string name="location_failed">स्थान दर्ज</string>
+    <string name="incoming_call">एक फोन आ रहा है</string>
+    <string name="your_post_has_been_posted">आपकी पोस्ट सफलतापूर्वक पोस्ट कर दी गई है</string>
+    <string name="success">सफलता</string>
+</resources>
