@@ -190,7 +190,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void OpenAlertForLogout() {
-        customDialog.setDailog("D", AppConstant.LOGOUT_ALERT,"Yes","No", AppConstant.USER_LOGOUT,"","");
+        customDialog.setDailog("D", AppConstant.LOGOUT_ALERT,getString(R.string.yes),getString(R.string.no), AppConstant.USER_LOGOUT,"","");
     }
 
 

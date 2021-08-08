@@ -347,7 +347,7 @@ public class PostActivity extends AppCompatActivity implements CommonDialogListn
     }
 
     private void OpenAlertForLogout() {
-        customDialog.setDailog("S", AppConstant.LOGOUT_ALERT,"Yes","No", AppConstant.USER_LOGOUT,getString(R.string.your_post_has_been_posted),"Success");
+        customDialog.setDailog("S", AppConstant.LOGOUT_ALERT,getString(R.string.yes),getString(R.string.no), AppConstant.USER_LOGOUT,getString(R.string.your_post_has_been_posted),"Success");
     }
 
     @Override

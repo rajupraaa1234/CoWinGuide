@@ -18,6 +18,7 @@
 
 
     <color name="editTextColor">#2BEAE8FF</color>
+    <color name="red">#D10644</color>
     <color name="editTextStroke">#2B7166F9</color>
     <color name="color_eae8ff">#eae8ff</color>
     <color name="color_transparent">#00ffffff</color>

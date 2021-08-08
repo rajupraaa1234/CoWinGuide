@@ -33,7 +33,7 @@
     <string name="first_name">नाम</string>
     <string name="location">कृपया अपना स्थान दर्ज करें</string>
     <string name="email">ईमेल</string>
-    <string name="post">पद</string>
+    <string name="post">पोस्ट</string>
     <string name="please_enter_your_service_type">कृपया अपना सेवा प्रकार दर्ज करें</string>
     <string name="number_of_services_available">उपलब्ध सेवाओं की संख्या</string>
     <string name="call_log_list">कॉल लॉग सूची</string>
@@ -56,4 +56,9 @@
     <string name="incoming_call">एक फोन आ रहा है</string>
     <string name="your_post_has_been_posted">आपकी पोस्ट सफलतापूर्वक पोस्ट कर दी गई है</string>
     <string name="success">सफलता</string>
+    <string name="create_post">पोस्ट बनाएं</string>
+    <string name="yes">हाँ</string>
+    <string name="no">नहीं</string>
+
+
 </resources>

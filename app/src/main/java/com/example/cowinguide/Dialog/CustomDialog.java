@@ -43,11 +43,12 @@ public class CustomDialog {
             TextView ctitle = (TextView) dialog.findViewById(R.id.common_dialog_text);
             TextView ifyes = (TextView) dialog.findViewById(R.id.common_dialog_yes);
             TextView ifNo = (TextView) dialog.findViewById(R.id.common_dialog_no);
-            ctitle.setText(title);
+           // ctitle.setText(title);
             ifyes.setText(yes);
             ifNo.setText(no);
             if(code== AppConstant.USER_LOGOUT){
                 ifNo.setTextColor(context.getColor(R.color.col_6af5dd));
+                ifyes.setTextColor(context.getColor(R.color.red));
             }
             ifyes.setOnClickListener(new View.OnClickListener() {
                 @Override

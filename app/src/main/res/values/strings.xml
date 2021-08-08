@@ -59,4 +59,7 @@
     <string name="incoming_call">InComing Call</string>
     <string name="your_post_has_been_posted">your post has been posted successfully</string>
     <string name="success">Success</string>
+    <string name="create_post">Create Post</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
