@@ -332,7 +332,7 @@ public class ConsumerFragment extends Fragment {
                 String long1 = arr.get(i).getLongitute();
                 double dist = Utility.getDistance(Double.parseDouble(lat1),Double.parseDouble(long1),myLat,myLong);
                 Log.i("MyDistance"," " + dist);
-                if(dist<=1000){
+                if(dist<=10000){
                     serachArr.add(arr.get(i));
                 }
             }
